@@ -1,0 +1,13 @@
+.row-fluid {
+	.column {
+		display: inline-block;
+		box-sizing: border-box;	
+	}
+}
+
+@for $i from 1 to 13 {
+	.col-#{$i} {
+		@extend .column;
+		width: $i / 12 * 100%;
+	}
+}

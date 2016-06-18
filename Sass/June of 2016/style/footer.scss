@@ -1,0 +1,12 @@
+@import 'colors.scss';
+@import 'anchoredBar.scss';
+
+footer {
+	@extend .anchored-bar;
+	bottom: 0;
+
+	color: $cyan;
+	text-align: center;
+	font-size: 1.5em;
+	line-height: 1.5em;
+}

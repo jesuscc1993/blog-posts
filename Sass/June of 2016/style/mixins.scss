@@ -1,0 +1,9 @@
+$browser-prefixes: ("moz", "webkit", "ms", "o");
+
+@mixin browserPrefixed($property, $value: ()) {
+	#{$property}: $value;
+
+	@each $prefix in $browser-prefixes {
+		#{'-' + $prefix + '-' + $property}: $value;
+	}
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sass demo</title>
+		<link type="image/x-icon"	href="../assets/sass_favicon.png" 	rel="icon"/>
+    	<link type="text/css"		href="style/header.css"				rel="stylesheet"/>
+    	<link type="text/css"		href="style/table.css"				rel="stylesheet"/>
+    	<link type="text/css"		href="style/footer.css"				rel="stylesheet"/>
+    	<link type="text/css"		href="style/messages.css"			rel="stylesheet"/>
+    	<link type="text/css"		href="style/filters.css"			rel="stylesheet"/>
+    	<link type="text/css"		href="style/columns.css"			rel="stylesheet"/>
+
+    	<link type="text/css"		href="style/common.css"				rel="stylesheet"/>
+	</head>
+	<body>
+		<header>Header</header>	
+
+		<div class="main">
+
+			<h2>Mixins</h2>
+			<div class="mixins-wrapper col-6 row-fluid">
+				<div class="col-6">
+					Unaltered image<br>
+					<img src="../assets/sass_logo.svg" height="128">
+				</div><div class="col-6 blurred">
+					Blur filter, written with browser prefixer mixin<br>
+					<img src="../assets/sass_logo.svg" height="128">
+				</div>
+			</div>
+
+			<h2>Inheritance, variables, operators and loops</h2>
+			<div class="messages-wrapper col-6 row-fluid">
+					  <div class="col-1 msg-info">Info
+				</div><div class="col-5 msg-success">Success
+				</div><div class="col-2 msg-warning">Warning
+				</div><div class="col-4 msg-error">Error</div>
+			</div>
+
+			<h2>Nesting</h2>
+			<div class="minion-table-wrapper">
+				<table>
+					<tr>
+						<th>#</th>
+						<th>FOO</th>
+						<th>BAR</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>Minions ipsum wiiiii potatoooo me want bananaaa!</td>
+						<td>Uuuhhh chasy bananaaaa hahaha aaaaaah. Tulaliloo jeje jiji.</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>Ti aamoo! wiiiii jeje jeje.</td>
+						<td>Po kass poulet tikka masala bee do bee do bee do la bodaaa.</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>Tank yuuu! jiji belloo! Hahaha aaaaaah.</td>
+						<td>Jeje tatata bala tu belloo! Me want bananaaa!</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>Minions ipsum tulaliloo pepete underweaaar po kass tank yuuu!</td>
+						<td>Poulet tikka masala wiiiii daa chasy poulet tikka masala.</td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>Hana dul sae bananaaaa chasy aaaaaah ti aamoo!</td>
+						<td>Poulet tikka masala pepete bananaaaa tatata bala tu.</td>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+
+		<footer>Footer</footer>
+	</body>
+</html>

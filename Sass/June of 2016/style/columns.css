@@ -1,0 +1,41 @@
+.row-fluid .column, .row-fluid .col-1, .row-fluid .col-2, .row-fluid .col-3, .row-fluid .col-4, .row-fluid .col-5, .row-fluid .col-6, .row-fluid .col-7, .row-fluid .col-8, .row-fluid .col-9, .row-fluid .col-10, .row-fluid .col-11, .row-fluid .col-12 {
+  display: inline-block;
+  box-sizing: border-box; }
+
+.col-1 {
+  width: 8.33333%; }
+
+.col-2 {
+  width: 16.66667%; }
+
+.col-3 {
+  width: 25%; }
+
+.col-4 {
+  width: 33.33333%; }
+
+.col-5 {
+  width: 41.66667%; }
+
+.col-6 {
+  width: 50%; }
+
+.col-7 {
+  width: 58.33333%; }
+
+.col-8 {
+  width: 66.66667%; }
+
+.col-9 {
+  width: 75%; }
+
+.col-10 {
+  width: 83.33333%; }
+
+.col-11 {
+  width: 91.66667%; }
+
+.col-12 {
+  width: 100%; }
+
+/*# sourceMappingURL=columns.css.map */

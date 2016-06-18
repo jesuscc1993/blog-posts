@@ -1,0 +1,17 @@
+.blurred {
+  filter: blur(2px);
+  -moz-filter: blur(2px);
+  -webkit-filter: blur(2px);
+  -ms-filter: blur(2px);
+  -o-filter: blur(2px);
+  transition: .1s;
+}
+.blurred:hover {
+  filter: none;
+  -moz-filter: none;
+  -webkit-filter: none;
+  -ms-filter: none;
+  -o-filter: none;
+}
+
+/*# sourceMappingURL=filters.css.map */

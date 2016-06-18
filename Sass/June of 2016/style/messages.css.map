@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAKA,wDAAwD;ACHxD,oEAAkB;EACjB,aAAa,EAAE,GAAG;EAClB,OAAO,EAAE,SAAS;EAClB,KAAK,EAAE,KAAK;EACZ,UAAU,EAAE,MAAM;EAClB,MAAM,EAAE,eAAe;;AAGxB,4CAAmB;EAClB,WAAW,EAAE,IAAI;;AAGlB,YAAa;EAGZ,gBAAgB,EDjBD,OAAO;;ACoBvB,SAAU;EAET,gBAAgB,EDrBD,OAAO;;ACwBvB,YAAa;EAEZ,gBAAgB,EDzBD,OAAO;;AC4BvB,UAAW;EAGV,gBAAgB,ED9BD,OAAO",
+"sources": ["bootstrap-colors.scss","messages.scss"],
+"names": [],
+"file": "messages.css"
+}

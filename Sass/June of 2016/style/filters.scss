@@ -1,0 +1,10 @@
+@import 'mixins.scss';
+
+.blurred {
+	@include browserPrefixed(filter, blur(2px));
+	transition: .1s;
+
+	&:hover {
+		@include browserPrefixed(filter, none);
+	}
+}

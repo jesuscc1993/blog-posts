@@ -1,0 +1,39 @@
+@import 'colors.scss';
+
+.minion-table-wrapper {
+  table {
+    margin: auto;
+
+    tr {
+      &:nth-child(even) {
+        background: $pastel-violet;
+      }
+
+      &:nth-child(odd) {
+        background: $pastel-purple;
+      }
+
+      th {
+        background: $light-gray;
+      }
+
+      td {
+        text-align: left;
+
+        &:first-child {
+          background: $light-gray;
+          text-align: center;
+        }
+      }
+
+      th, td {
+        min-width: 32px;
+        padding: 0 4px;
+
+        &:first-child {
+          text-align: center;
+        }
+      }
+    }
+  }
+}

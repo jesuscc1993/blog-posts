@@ -1,0 +1,9 @@
+.anchored-bar {
+	position: fixed;
+	width: 100vw;
+	height: 48px;
+	z-index: 100;
+
+	background: white;
+	box-shadow: 0 0 12px rgba(black, .25);
+}

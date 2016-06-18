@@ -1,0 +1,17 @@
+.anchored-bar, header {
+  position: fixed;
+  width: 100vw;
+  height: 48px;
+  z-index: 100;
+  background: white;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+}
+
+header {
+  top: 0;
+  color: #39ACE5;
+  text-align: center;
+  font-size: 2em;
+}
+
+/*# sourceMappingURL=header.css.map */

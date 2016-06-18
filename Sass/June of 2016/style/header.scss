@@ -1,0 +1,11 @@
+@import 'colors.scss';
+@import 'anchoredBar.scss';
+
+header {
+	@extend .anchored-bar;
+	top: 0;
+
+	color: $cyan;
+	text-align: center;
+	font-size: 2em;
+}

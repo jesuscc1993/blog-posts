@@ -4,7 +4,7 @@ When I entered my current project one of the first things I noticed was it used 
 I could be explaining LESS instead of SASS but as the differences between them syntax-wise are minimal and I personally prefer the later I’ll go with it. Bear with me.<br><br>
 
 PS: All the code I’ll be showing here can be found on my <a href="https://github.com/jesuscc1993/demos/tree/master/Sass/June%20of%202016" target="_blank">demos git repo</a>.
-<h2>Variables and import</h2>
+<br><br><h2>Variables and import</h2>
 One of the most basic features of SASS is the use of variables. Be it strings, numbers or lists you can use them.
 <span style="color: #808080"><em><br><br>“Variables in CSS? Is this magic?”<br><br></em></span>
 
@@ -41,7 +41,7 @@ $cyan: #39ACE5;
 <span style="color: #808080"><em>“What’s this? We’ve got even more code and files now!”.<br><br></em></span>
 
 Indeed we do, but there’s a reason behind it. Let’s say you change the website’s background color and now your font color is too dark to be read. It may be easy to change it in the example, having only two files that use this same color, but it can be tedious in real projects where you may be referencing a color in dozens of CSS files. By extracting a color to a variable you don’t just make it more readable (let’s face it, it’s not easy to understand #39ACE5 equals the cyan color). In case of need to change it, you’d only need to change wherever it was defined (in just one place) and then re-compile your SCSS files into CSS ones. Pretty nifty, huh?
-<h2>Operators and loops</h2>
+<br><br><h2>Operators and loops</h2>
 We have variables so it only makes sense to have operators as well. And they can store lists so Sass obviously gives supports for looping.
 Let’s say we want to incorporate the column system bootstrap provides, but we don’t want the other features.
 <span style="color: #808080"><em><br><br>“I do dislike how it messes up the default HTML components”.<br><br></em></span>
@@ -92,7 +92,7 @@ We could write our own column system with operators and loops. If we compiled th
 .col-12 { width: 100%; }
 </pre>
 <span style="color: #808080"><em>“Now THAT’s time saving”.<br></em></span>
-<h2>Mixins</h2>
+<br><h2>Mixins</h2>
 We talked about variables, but SASS has functions as well. These are called mixins.
 Let’s say we need to use the filter CSS rule. But it relies on different prefixes depending on the browser.
 <span style="color: #808080"><em><br><br>“I hate browser dependent rules”.<br><br></em></span>
@@ -130,7 +130,7 @@ The resulting compiled CSS file would look like this:
   -o-filter: blur(2px);
 }</pre>
 How do you like it, writing browser dependant rules with one single line? I myself find it heaven-like.
-<h2>Inheritance</h2>
+<br><br><h2>Inheritance</h2>
 Let’s say we want to style feedback messages. They all will share all their styling, except from the background-color that will depend on the source and criticality of the message and success and error messages will additionally use bold text. We’d end up with something like this:
 <pre><span style="color: #3366ff">messages.css</span>
 .msg-success, .msg-info, .msg-warning, .msg-error { 
@@ -201,8 +201,8 @@ Not bad, but let’s add variables and inheritance for a better readability:
 </pre>
 Easier to comprehend and way less cluttering. And, more importantly, we know at the class level what other classes it extends, instead of needing to look for wherever the never-ending list of classes that share some style rules is defined.
 <span style="color: #808080"><em><br><br>“That’s a good point”.<br></em></span>
-<h2>Nesting</h2>
-Another cool feature is nesting. As usual, let’s go with an example.
+<br><h2>Nesting</h2>
+Another cool feature is nesting. As usual, let’s go with an example.<br>
 Imagine you have the following structure on HTML:
 <p style="text-indent: 16px">&lt;table&gt;</p>
 <p style="text-indent: 32px">&lt;tr&gt;</p>
@@ -285,9 +285,9 @@ As you can see, it’s not easy to tell apart the actual structure of the compon
   }
 }</pre>
 As you can tell, the actual structure of the page elements is now quite obvious and we remove the need to prefix it to every rule we write.
-<span style="color: #808080"><em><br><br>“It’s like HTML within CSS”.<br><br></em></span>
-<h2>Final words</h2>
-To sum up, Sass is just plain awesome. If you give it a chance, it will for sure make your lives quite easier.
-Well, that was it. I hope I made my explanations and examples clear and interesting enough (“I’d like to think I did”).
+<span style="color: #808080"><em><br><br>“It’s like HTML within CSS”.<br></em></span>
+<br><h2>Final words</h2>
+To sum up, Sass is just plain awesome. If you give it a chance, it will for sure make your lives quite easier.<br>
+Well, that was it. I hope I made my explanations and examples clear and interesting enough (“I’d like to think I did”).<br>
 My hope is I imbued this article with at least a bit of my love for Sass and some of that gets to you.
 <br><br><br><br>

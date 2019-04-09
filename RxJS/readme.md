@@ -18,7 +18,7 @@ You might have asked yourself "why should I use RxJS?".
 You might even think "Promises work just fine; no need to change what is not broken".  
 The intent of this article is to have readers thinking "I should use RxJS" by the time they have reached its bottom.
 
-This is, by no means, an attempt to force an idea on others. This is an effort to expose the advantadges of RxJS so that people realize it can potentially make their code cleaner and their lifes easier.
+This is, by no means, an attempt to force an idea on others. This is an effort to expose the advantages of RxJS so that people realize it can potentially make their code cleaner and their lives easier.
 
 ## 1. Observables are streams
 
@@ -33,7 +33,7 @@ You can read about [reactive programming](https://en.wikipedia.org/wiki/Reactive
 
 [_"Operators are the essential pieces that allow complex asynchronous code to be easily composed in a declarative manner"_](http://reactivex.io/rxjs/manual/overview.html#operators).
 
-RxJS presents [a lot of operators](http://reactivex.io/rxjs/manual/overview.html#categories-of-operators) that facilitate coding, including but not limitted to most functions available to arrays. e.g.:
+RxJS presents [a lot of operators](http://reactivex.io/rxjs/manual/overview.html#categories-of-operators) that facilitate coding, including but not limited to most functions available to arrays. e.g.:
 
 ```javascript
 // observable
@@ -63,7 +63,7 @@ Note: RxJS follows the [functional programming](https://en.wikipedia.org/wiki/Fu
 
 ## 3. Emission debouncing
 
-If we give the user a text input and subscribe to its changes we will get a stream that will emit for each valid keystroke but we usually will not care about any of these values except for the final one. One way to work around this is debouncing, which means discarding emisions until a set amount of time passed after the last one and then return that last one.
+If we give the user a text input and subscribe to its changes we will get a stream that will emit for each valid keystroke but we usually will not care about any of these values except for the final one. One way to work around this is debouncing, which means discarding emissions until a set amount of time passed after the last one and then return that last one.
 
 Additionally, thanks to operators, we can further thin out the emissions by discarding emissions of the same value and emissions not meeting a minimum character requirement. e.g.:
 
@@ -151,7 +151,7 @@ RxJS allows you not only to catch errors but to recover from them too, by return
 ```javascript
 // observable
 const data$ = of([0, 1, 2, 3, undefined, 5]).pipe(
-  flatMap((value: any[]) =>
+  flatMap((value) =>
     typeof value.includes(undefined)
       ? throwError(`Items cannot be empty.`)
       : of(value)

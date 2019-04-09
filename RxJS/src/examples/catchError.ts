@@ -3,7 +3,7 @@ import { catchError, flatMap, tap } from 'rxjs/operators';
 
 // observable
 const data$ = of([0, 1, 2, 3, undefined, 5]).pipe(
-  flatMap((value: any[]) =>
+  flatMap((value) =>
     typeof value.includes(undefined)
       ? throwError(`Items cannot be empty.`)
       : of(value)

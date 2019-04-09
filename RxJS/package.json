@@ -1,0 +1,23 @@
+{
+  "author": {
+    "name": "jesuscc1993"
+  },
+  "description": "RxJS demo",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "rxjs-demo",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "dependencies": {
+    "rxjs": "^6.4.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.4.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  }
+}

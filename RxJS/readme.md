@@ -1,6 +1,6 @@
 # Eight reasons why you should be using RxJS
 
-##Index
+## Index
 
 0. [Preface](#0-preface)
 1. [Observables are streams](#1-observables-are-streams)
@@ -12,7 +12,7 @@
 1. [Retry on error](#7-retry-on-error)
 1. [Multicasting](#8-multicasting)
 
-##0. Preface
+## 0. Preface
 
 You might have asked yourself "why should I use RxJS?".  
 You might even think "Promises work just fine; no need to change what is not broken".  
@@ -20,7 +20,7 @@ The intent of this article is to have readers thinking "I should use RxJS" by th
 
 This is, by no means, an attempt to force an idea on others. This is an effort to expose the advantages of RxJS so that people realize it can potentially make their code cleaner and their lives easier.
 
-##1. Observables are streams
+## 1. Observables are streams
 
 [_"A stream is a sequence of data elements made available over time"_](<https://en.wikipedia.org/wiki/Stream_(computing)>).
 
@@ -29,7 +29,7 @@ If you are used to utilizing promises or something more obscure you will most li
 [Observables](http://reactivex.io/rxjs/manual/overview.html#observable), on the other hand, are [data streams](https://en.wikipedia.org/wiki/Data_stream). As long as a subscription exist to an observable, the latter can keep emitting values and the former will receive and process them separately at the time they each arrive.  
 You can read about [reactive programming](https://en.wikipedia.org/wiki/Reactive_programming) to learn more about how this works.
 
-##2. Extensive list of operators
+## 2. Extensive list of operators
 
 [_"Operators are the essential pieces that allow complex asynchronous code to be easily composed in a declarative manner"_](http://reactivex.io/rxjs/manual/overview.html#operators).
 
@@ -61,7 +61,7 @@ The code is extremely readable on its own, but I will explain it nonetheless:
 
 Note: RxJS follows the [functional programming](https://en.wikipedia.org/wiki/Functional_programming) paradigm so operators do _not_ change the existing observable and instead [return a new one](http://reactivex.io/rxjs/manual/overview.html#what-are-operators-).
 
-##3. Emission debouncing
+## 3. Emission debouncing
 
 If we give the user a text input and subscribe to its changes we will get a stream that will emit for each valid keystroke but we usually will not care about any of these values except for the final one. One way to work around this is debouncing, which means discarding emissions until a set amount of time passed after the last one and then return that last one.
 
@@ -79,7 +79,7 @@ searchObservable
   .subscribe();
 ```
 
-##4. Emission replay
+## 4. Emission replay
 
 Unless you are using stores, it is quite likely that different parts of your application will query for the same data.
 Thanks to observables, though, this does not mean sending multiple requests. e.g.:
@@ -108,7 +108,7 @@ data$
 
 The data is being retrieved on multiple subscriptions yet it actually is only being requested once.
 
-##5. Cancellation of subscriptions
+## 5. Cancellation of subscriptions
 
 Some frameworks mount and unmount components based on their visibility or recreate them from scratch when changes occur.
 When this happens, we can cancel all pending requests for those now nonexistent components. e.g:
@@ -144,7 +144,7 @@ data$.pipe(takeUntil(stop$)).subscribe();
 The request is started for both independent executions of the observable but only finishes for subscription #1.  
 This is due to stop\$ emitting before the request finishes for subscription #2 and its subscription being cancelled in reaction.
 
-##6. Error catching
+## 6. Error catching
 
 RxJS allows you not only to catch errors but to recover from them too, by returning a fallback value. e.g:
 
@@ -172,7 +172,7 @@ data$
   .subscribe();
 ```
 
-##7. Retry on error
+## 7. Retry on error
 
 Easy to overlook and even easier to implement, RxJS provides us with the chance to retry on error. e.g:
 
@@ -225,7 +225,7 @@ data$
   .subscribe();
 ```
 
-##8. Multicasting
+## 8. Multicasting
 
 There are two types of observables, depending on how they handle subscription.
 

@@ -4,13 +4,13 @@
 
 0. [Preface](#0-preface)
 1. [Observables are streams](#1-observables-are-streams)
-1. [Extensive list of operators](#2-extensive-list-of-operators)
-1. [Emission debouncing](#3-emission-debouncing)
-1. [Emission replay](#4-emission-replay)
-1. [Cancellation of subscriptions](#5-cancellation-of-subscriptions)
-1. [Error catching](#6-error-catching)
-1. [Retry on error](#7-retry-on-error)
-1. [Multicasting](#8-multicasting)
+2. [Extensive list of operators](#2-extensive-list-of-operators)
+3. [Emission debouncing](#3-emission-debouncing)
+4. [Emission replay](#4-emission-replay)
+5. [Cancellation of subscriptions](#5-cancellation-of-subscriptions)
+6. [Error catching](#6-error-catching)
+7. [Retry on error](#7-retry-on-error)
+8. [Multicasting](#8-multicasting)
 
 ## 0. Preface
 
@@ -151,7 +151,7 @@ RxJS allows you not only to catch errors but to recover from them too, by return
 ```javascript
 // observable
 const data$ = of([0, 1, 2, 3, undefined, 5]).pipe(
-  flatMap((value) =>
+  flatMap(value =>
     typeof value.includes(undefined)
       ? throwError(`Items cannot be empty.`)
       : of(value)
@@ -234,3 +234,27 @@ So far we have only covered plain observables, which are unicast (there are, tho
 The other type are [subjects](http://reactivex.io/rxjs/manual/overview.html#subject), which are both observables and [observers](http://reactivex.io/rxjs/class/es6/MiscJSDoc.js~ObserverDoc.html). Subscribing to these observables simply registers the given subscription in a list internal to the subject.
 
 Subscriptions to observables are ignorant of whether the observable is unicast or multicast and make no difference on their implementation.
+
+## Bonus
+
+You made it this far so hopefully you are at least somewhat interested in RxJS. If that is indeed the case you might want to check out the following list, containing the operators I deem the most commonly useful:
+
+- Creation
+  - [from](https://www.learnrxjs.io/operators/creation/from.html): creates an observable based on the parameter passed. If the parameter is iterable, an emission will occur per item.
+  - [of](https://www.learnrxjs.io/operators/creation/of.html): creates an observable based on the parameters passed. An emission will occur per parameter.
+  - [throwError](https://www.learnrxjs.io/operators/creation/throw.html): returns an observable that emits the passed error on subscription.
+- Error Handling
+  - [catchError](https://www.learnrxjs.io/operators/error_handling/catch.html): catches errors and returns fallback values based on the passed function.
+- Filtering
+  - [debounceTime](https://www.learnrxjs.io/operators/filtering/debouncetime.html): discard emissions until a set amount of time passed after the last one and then return that last one.
+  - [distinctUntilChanged](https://www.learnrxjs.io/operators/filtering/distinctuntilchanged.html): discard emissions for values matching the last one.
+  - [filter](https://www.learnrxjs.io/operators/filtering/filter.html): filter emissions based he passed function.
+  - [takeUntil](https://www.learnrxjs.io/operators/filtering/takeuntil.html): stop emitting after the given observable emits.
+- Multicasting
+  - [shareReplay](https://www.learnrxjs.io/operators/multicasting/sharereplay.html): replay specified number of emissions on subscription (or indefinitely if no number passed).
+- Transformation
+  - [map](https://www.learnrxjs.io/operators/transformation/map.html): transform editions based on the passed function.
+  - [flatMap](https://www.learnrxjs.io/operators/transformation/mergemap.html): subscribes to an inner observable and emits the returned values.
+  - [reduce](https://www.learnrxjs.io/operators/transformation/reduce.html): reduce emissions into a single one based on the passed function.
+- Utility
+  - [tap](https://www.learnrxjs.io/operators/utility/do.html): performs side-effect operations on each emission.

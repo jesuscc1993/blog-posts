@@ -15,7 +15,8 @@ range$
   .pipe(
     retryWhen(error =>
       error.pipe(
-        tap(error => console.error(`${error}. Retrying in 3s...`)),
+        tap(error => console.error(error)),
+        tap(() => console.debug('Retrying in 3s...')),
         delayWhen(() => timer(3000))
       )
     )

@@ -4,13 +4,13 @@
 
 0. [Preface](#0-preface)
 1. [Observables are streams](#1-observables-are-streams)
-2. [Extensive list of operators](#2-extensive-list-of-operators)
-3. [Emission debouncing](#3-emission-debouncing)
-4. [Emission replay](#4-emission-replay)
-5. [Cancellation of subscriptions](#5-cancellation-of-subscriptions)
-6. [Error catching](#6-error-catching)
-7. [Retry on error](#7-retry-on-error)
-8. [Multicasting](#8-multicasting)
+1. [Extensive list of operators](#2-extensive-list-of-operators)
+1. [Emission debouncing](#3-emission-debouncing)
+1. [Emission replay](#4-emission-replay)
+1. [Cancellation of subscriptions](#5-cancellation-of-subscriptions)
+1. [Error catching](#6-error-catching)
+1. [Retry on error](#7-retry-on-error)
+1. [No callback hell](#8-no-callback-hell)
 
 ## 0. Preface
 
@@ -20,20 +20,41 @@ The intent of this article is to have readers thinking "I should use RxJS" by th
 
 This is, by no means, an attempt to force an idea on others. This is an effort to expose the advantages of RxJS so that people realize it can potentially make their code cleaner and their lives easier.
 
+Some of the reasons I listed, such as debouncing, cancellation, error catching, etc. are already available to promises and callbacks but they equire more code complexity and often additional libraries. RxJS provides such features in a clean, readable and easy to implement manner.
+
 ## 1. Observables are streams
 
 [_"A stream is a sequence of data elements made available over time"_](<https://en.wikipedia.org/wiki/Stream_(computing)>).
 
 If you are used to utilizing promises or something more obscure you will most likely implement code that is only run once and then succeed or fail.
 
-[Observables](http://reactivex.io/rxjs/manual/overview.html#observable), on the other hand, are [data streams](https://en.wikipedia.org/wiki/Data_stream). As long as a subscription exist to an observable, the latter can keep emitting values and the former will receive and process them separately at the time they each arrive.  
-You can read about [reactive programming](https://en.wikipedia.org/wiki/Reactive_programming) to learn more about how this works.
+[Observables](http://reactivex.io/rxjs/manual/overview.html#observable), on the other hand, are [data streams](https://en.wikipedia.org/wiki/Data_stream). They can keep emitting values and any [subscriptions](http://reactivex.io/rxjs/class/es6/Subscription.js~Subscription.html) will receive and process them separately at the time they each arrive.
+
+_You can read about [reactive programming](https://en.wikipedia.org/wiki/Reactive_programming) to learn more about how this works._
+
+In addition, there are two types of observables:
+
+- Cold observables are [unicast](https://en.wikipedia.org/wiki/Unicast) so they return an independent execution of the observable on subscription.  
+  These might be used when performing pure operations with changing arguments or non-pure operations such as fetching data from a server that might change with time.
+
+- Hot observables are [multicast](https://en.wikipedia.org/wiki/Multicast) so they run by themselves and instead they register subscriptions in an internal list.  
+  These might be used for continous streams, such as events, or pure operations with no arguments such as fetching master data from a server.
+  - RxJS provides us with [subjects](http://reactivex.io/rxjs/manual/overview.html#subject), which are both observables and [observers](http://reactivex.io/rxjs/class/es6/MiscJSDoc.js~ObserverDoc.html). Additionally to plain subjects, we have some other implementations with added features:
+    - [AsyncSubject](https://www.learnrxjs.io/subjects/asyncsubject.html): only emits its last value and only on completion.
+    - [BehaviorSubject](https://www.learnrxjs.io/subjects/behaviorsubject.html): keeps track of the last emission and emits it's value to new subscription. If no emission occured yet, the initial value is emitted.
+    - [ReplaySubject](https://www.learnrxjs.io/subjects/replaysubject.html): replays all emissions for late subscribers.
+
+_Note:_ [some operators](http://reactivex.io/rxjs/manual/overview.html#multicasting-operators) return a multicast observable from a unicast observable but a first subscription to the original cold observable is required in order to generate the hot observable and get it running.
+
+Subscriptions to observables are ignorant of whether the observable is unicast or multicast and make no difference on their implementation.
 
 ## 2. Extensive list of operators
 
 [_"Operators are the essential pieces that allow complex asynchronous code to be easily composed in a declarative manner"_](http://reactivex.io/rxjs/manual/overview.html#operators).
 
-RxJS presents [a lot of operators](http://reactivex.io/rxjs/manual/overview.html#categories-of-operators) that facilitate coding, including but not limited to most functions available to arrays. e.g.:
+RxJS presents [a lot of operators](http://reactivex.io/rxjs/manual/overview.html#categories-of-operators) that facilitate coding, including but not limited to most functions available to arrays.
+
+_Example:_
 
 ```javascript
 // observable
@@ -52,6 +73,12 @@ range$
   .subscribe();
 ```
 
+_Output:_
+
+```
+300
+```
+
 The code is extremely readable on its own, but I will explain it nonetheless:
 
 1. [`map`](https://www.learnrxjs.io/operators/transformation/map.html) emitted items to their values \* 10
@@ -65,7 +92,9 @@ Note: RxJS follows the [functional programming](https://en.wikipedia.org/wiki/Fu
 
 If we give the user a text input and subscribe to its changes we will get a stream that will emit for each valid keystroke but we usually will not care about any of these values except for the final one. One way to work around this is debouncing, which means discarding emissions until a set amount of time passed after the last one and then return that last one.
 
-Additionally, thanks to operators, we can further thin out the emissions by discarding emissions of the same value and emissions not meeting a minimum character requirement. e.g.:
+Additionally, thanks to operators, we can further thin out the emissions by discarding emissions of the same value and emissions not meeting a minimum character requirement.
+
+_Example:_
 
 ```javascript
 // subscription
@@ -81,8 +110,9 @@ searchObservable
 
 ## 4. Emission replay
 
-Unless you are using stores, it is quite likely that different parts of your application will query for the same data.
-Thanks to observables, though, this does not mean sending multiple requests. e.g.:
+As [point 1](#1-observables-are-streams) mentions, it is likely that different parts of your application will query for the same master data and thanks to RxJS this does not mean sending multiple requests.
+
+_Example:_
 
 ```javascript
 // observable
@@ -106,14 +136,22 @@ data$
   .subscribe();
 ```
 
+_Output:_
+
+```
+data requested
+retrieved foo on subscription #1
+retrieved foo on subscription #2
+```
+
 The data is being retrieved on multiple subscriptions yet it actually is only being requested once.
 
 ## 5. Cancellation of subscriptions
 
 Some frameworks mount and unmount components based on their visibility or recreate them from scratch when changes occur.
-When this happens, we can cancel all pending requests for those now nonexistent components. e.g:
+When this happens, we can cancel all pending requests for those now nonexistent components.
 
-Take these observables:
+_Example:_
 
 ```javascript
 // datasource observable
@@ -126,27 +164,41 @@ const data$ = of('foo').pipe(
 
 ```javascript
 // stop observable
-const stop$ = of(true).pipe(delay(250));
+const stop$ = timer(250);
 ```
-
-...and these two subscriptions:
 
 ```javascript
 // subscription #1
-data$.subscribe();
+data$.subscribe({
+  complete: () => console.log(`subscription #1 completed`)
+});
 ```
 
 ```javascript
 // subscription #2
-data$.pipe(takeUntil(stop$)).subscribe();
+data$.pipe(takeUntil(stop$)).subscribe({
+  complete: () => console.log(`subscription #2 completed`)
+});
 ```
 
-The request is started for both independent executions of the observable but only finishes for subscription #1.  
-This is due to stop\$ emitting before the request finishes for subscription #2 and its subscription being cancelled in reaction.
+_Output:_
+
+```
+request started
+request started
+subscription #2 completed
+request finished
+subscription #1 completed
+```
+
+The request is started for both independent executions of the observable but completes prematurely for subscription #2.  
+This is due to stop\$ emitting before the observable's request finishes and its subscription being cancelled in reaction.
 
 ## 6. Error catching
 
-RxJS allows you not only to catch errors but to recover from them too, by returning a fallback value. e.g:
+RxJS allows you not only to catch errors but to recover from them too, by returning a fallback value.
+
+_Example:_
 
 ```javascript
 // observable
@@ -163,18 +215,25 @@ const data$ = of([0, 1, 2, 3, undefined, 5]).pipe(
 // subscription
 data$
   .pipe(
-    tap(val => console.log(val)),
     catchError(error => {
       console.error(error);
       return of([]); // [] is here the fallback value
-    })
+    }),
+    tap(val => console.log(val))
   )
   .subscribe();
 ```
 
+_Output:_
+
+```
+Items cannot be empty.
+[]
+```
+
 ## 7. Retry on error
 
-Easy to overlook and even easier to implement, RxJS provides us with the chance to retry on error. e.g:
+Easy to overlook and even easier to implement, RxJS provides us with the chance to retry on error.
 
 Given the following observable:
 
@@ -191,6 +250,8 @@ const data$ = from([0, 1, 2, 'foo']).pipe(
 
 ...we can either simply retry n times:
 
+_Example:_
+
 ```javascript
 // subscription
 range$
@@ -198,7 +259,7 @@ range$
     retry(3),
     tap(
       val => console.log(val),
-      () => console.debug(`Run out of retry attempts.`)
+      () => console.debug(`Ran out of retry attempts.`)
     ),
     catchError(error => {
       console.error(error);
@@ -208,7 +269,28 @@ range$
   .subscribe();
 ```
 
+_Output:_
+
+```
+0
+1
+2
+0
+1
+2
+0
+1
+2
+0
+1
+2
+Ran out of retry attempts.
+Value "foo" is not a valid number.
+```
+
 ...or retry after some conditions are met, thanks to an inner observable:
+
+_Example:_
 
 ```javascript
 // subscription
@@ -225,15 +307,29 @@ data$
   .subscribe();
 ```
 
-## 8. Multicasting
+_Output:_
 
-There are two types of observables, depending on how they handle subscription.
+```
+Value "foo" is not a valid number.
+Retrying in 3s...
+Value "foo" is not a valid number.
+Retrying in 3s...
+Value "foo" is not a valid number.
+Retrying in 3s...
+[...]
+```
 
-So far we have only covered plain observables, which are unicast (there are, though, [some operators](http://reactivex.io/rxjs/manual/overview.html#multicasting-operators) like the [shareReplay](https://www.learnrxjs.io/operators/multicasting/sharereplay.html) we covered that return a multicast observable from a unicast observable). Subscribing to these observables returns an independent execution of the observable.
+## 8. No callback hell
 
-The other type are [subjects](http://reactivex.io/rxjs/manual/overview.html#subject), which are both observables and [observers](http://reactivex.io/rxjs/class/es6/MiscJSDoc.js~ObserverDoc.html). Subscribing to these observables simply registers the given subscription in a list internal to the subject.
+Something both promises and callbacks are prone to introduce is known as [callback hell](http://callbackhell.com/). Nested operations can easily grow in complexity and lose readability and generally become messy.
 
-Subscriptions to observables are ignorant of whether the observable is unicast or multicast and make no difference on their implementation.
+Thanks to the [flatMap](https://www.learnrxjs.io/operators/transformation/mergemap.html) operator, things are much easier and cleaner with RxJS.
+
+_Example:_
+
+```javascript
+// TODO
+```
 
 ## Bonus
 
@@ -254,7 +350,7 @@ You made it this far so hopefully you are at least somewhat interested in RxJS. 
   - [shareReplay](https://www.learnrxjs.io/operators/multicasting/sharereplay.html): replay specified number of emissions on subscription (or indefinitely if no number passed).
 - Transformation
   - [map](https://www.learnrxjs.io/operators/transformation/map.html): transform editions based on the passed function.
-  - [flatMap](https://www.learnrxjs.io/operators/transformation/mergemap.html): subscribes to an inner observable and emits the returned values.
+  - [mergeMap / flatMap](https://www.learnrxjs.io/operators/transformation/mergemap.html): subscribes to an inner observable and emits the returned values.
   - [reduce](https://www.learnrxjs.io/operators/transformation/reduce.html): reduce emissions into a single one based on the passed function.
 - Utility
   - [tap](https://www.learnrxjs.io/operators/utility/do.html): performs side-effect operations on each emission.

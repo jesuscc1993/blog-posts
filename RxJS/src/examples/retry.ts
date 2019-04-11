@@ -16,7 +16,7 @@ range$
     retry(3),
     tap(
       val => console.log(val),
-      () => console.debug(`Run out of retry attempts.`)
+      () => console.debug(`Ran out of retry attempts.`)
     ),
     catchError(error => of(console.error(error)))
   )

@@ -327,8 +327,97 @@ Thanks to the [flatMap](https://www.learnrxjs.io/operators/transformation/mergem
 
 _Example:_
 
+Lets say we have three endpoints. One returns the current user, another returns all user lists and a thir one returns all list items. If we want to, we can easily retrieve all this data _in a single subscription_, thanks to nested observables:
+
 ```javascript
-// TODO
+// user observable
+const user$ = of({ id: 0, name: 'User #1', listIds: [0, 1] });
+```
+
+```javascript
+// lists observable
+const lists$ = of([
+  { id: 0, name: 'List #1', itemIds: [0, 1] },
+  { id: 1, name: 'List #2', itemIds: [2, 3] },
+  { id: 3, name: 'List #3', itemIds: [5] }
+]);
+```
+
+```javascript
+// items observable
+const items$ = of([
+  { id: 0, name: 'Item #1' },
+  { id: 1, name: 'Item #2' },
+  { id: 2, name: 'Item #3' },
+  { id: 3, name: 'Item #4' },
+  { id: 4, name: 'Item #5' }
+]);
+```
+
+```javascript
+// subscription
+
+// get current user
+user$
+  .pipe(
+    flatMap(user =>
+      // retrieve all lists
+      lists$.pipe(
+        // rebuild user, adding those lists they own
+        map(lists => ({
+          ...user,
+          lists: lists.filter(list => user.listIds.includes(list.id))
+        }))
+      )
+    ),
+    flatMap(user =>
+      // retrieve all items
+      items$.pipe(
+        // rebuild user, adding to each one of their lists those items they include
+        map(items => ({
+          ...user,
+          lists: user.lists.map(list => ({
+            ...list,
+            items: items.filter(item => list.itemIds.includes(item.id))
+          }))
+        }))
+      )
+    ),
+    tap(value => console.log(value))
+  )
+  .subscribe();
+```
+
+As you can see, we add steps sequentially but we do not introduce endless nested code blocks and we do not need to deal with having _n_ number of callbacks or resolves within the same scope.
+
+_Output:_
+
+```javascript
+{
+  id: 0,
+  name: 'User #1',
+  listIds: [0, 1],
+  lists: [
+    {
+      id: 0,
+      name: 'List #1',
+      itemIds: [0, 1],
+      items: [
+        { id: 0, name: 'Item #1' },
+        { id: 1, name: 'Item #2' }
+      ]
+    },
+    {
+      id: 1,
+      name: 'List #2',
+      itemIds: [2, 3],
+      items: [
+        { id: 2, name: 'Item #3' },
+        { id: 3, name: 'Item #4' }
+      ]
+    }
+  ]
+}
 ```
 
 ## Bonus

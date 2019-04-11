@@ -4,13 +4,13 @@
 
 0. [Preface](#0-preface)
 1. [Observables are streams](#1-observables-are-streams)
-1. [Extensive list of operators](#2-extensive-list-of-operators)
-1. [Emission debouncing](#3-emission-debouncing)
-1. [Emission replay](#4-emission-replay)
-1. [Cancellation of subscriptions](#5-cancellation-of-subscriptions)
-1. [Error catching](#6-error-catching)
-1. [Retry on error](#7-retry-on-error)
-1. [No callback hell](#8-no-callback-hell)
+2. [Extensive list of operators](#2-extensive-list-of-operators)
+3. [Emission debouncing](#3-emission-debouncing)
+4. [Emission replay](#4-emission-replay)
+5. [Cancellation of subscriptions](#5-cancellation-of-subscriptions)
+6. [Error catching](#6-error-catching)
+7. [Retry on error](#7-retry-on-error)
+8. [No callback hell](#8-no-callback-hell)
 
 ## 0. Preface
 
@@ -86,7 +86,7 @@ The code is extremely readable on its own, but I will explain it nonetheless:
 3. [`reduce`](https://www.learnrxjs.io/operators/transformation/reduce.html) items and sum their values into a single one
 4. [`tap`](https://www.learnrxjs.io/operators/utility/do.html) the resulting item and log its value
 
-Note: RxJS follows the [functional programming](https://en.wikipedia.org/wiki/Functional_programming) paradigm so operators do _not_ change the existing observable and instead [return a new one](http://reactivex.io/rxjs/manual/overview.html#what-are-operators-).
+Note: RxJS operators are [pure functions](https://en.wikipedia.org/wiki/Pure_function) so they do _not_ change the existing observable and instead [return a new one](http://reactivex.io/rxjs/manual/overview.html#what-are-operators-).
 
 ## 3. Emission debouncing
 

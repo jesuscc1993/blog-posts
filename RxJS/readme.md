@@ -1,16 +1,16 @@
-# Eight reasons why you should be using RxJS
+# Eight reasons why you should be using RxJS (April 10, 2019)
 
 ## Index
 
 0. [Preface](#0-preface)
 1. [Observables are streams](#1-observables-are-streams)
-2. [Extensive list of operators](#2-extensive-list-of-operators)
-3. [Emission debouncing](#3-emission-debouncing)
-4. [Emission replay](#4-emission-replay)
-5. [Cancellation of subscriptions](#5-cancellation-of-subscriptions)
-6. [Error catching](#6-error-catching)
-7. [Retry on error](#7-retry-on-error)
-8. [No callback hell](#8-no-callback-hell)
+1. [Extensive list of operators](#2-extensive-list-of-operators)
+1. [Emission debouncing](#3-emission-debouncing)
+1. [Emission replay](#4-emission-replay)
+1. [Cancellation of subscriptions](#5-cancellation-of-subscriptions)
+1. [Error catching](#6-error-catching)
+1. [Retry on error](#7-retry-on-error)
+1. [No callback hell](#8-no-callback-hell)
 
 ## 0. Preface
 
@@ -124,16 +124,12 @@ const data$ = of('foo').pipe(
 
 ```javascript
 // subscription #1
-data$
-  .pipe(tap(item => console.log(`retrieved ${item} on subscription #1`)))
-  .subscribe();
+data$.pipe(tap(item => console.log(`retrieved ${item} on subscription #1`))).subscribe();
 ```
 
 ```javascript
 // subscription #2
-data$
-  .pipe(tap(item => console.log(`retrieved ${item} on subscription #2`)))
-  .subscribe();
+data$.pipe(tap(item => console.log(`retrieved ${item} on subscription #2`))).subscribe();
 ```
 
 _Output:_
@@ -203,11 +199,7 @@ _Example:_
 ```javascript
 // observable
 const data$ = of([0, 1, 2, 3, undefined, 5]).pipe(
-  flatMap(value =>
-    typeof value.includes(undefined)
-      ? throwError(`Items cannot be empty.`)
-      : of(value)
-  )
+  flatMap(value => (typeof value.includes(undefined) ? throwError(`Items cannot be empty.`) : of(value)))
 );
 ```
 
@@ -240,11 +232,7 @@ Given the following observable:
 ```javascript
 // observable
 const data$ = from([0, 1, 2, 'foo']).pipe(
-  flatMap(value =>
-    typeof value !== 'number'
-      ? throwError(`Value "${value}" is not a valid number.`)
-      : of(value)
-  )
+  flatMap(value => (typeof value !== 'number' ? throwError(`Value "${value}" is not a valid number.`) : of(value)))
 );
 ```
 
@@ -257,10 +245,7 @@ _Example:_
 range$
   .pipe(
     retry(3),
-    tap(
-      val => console.log(val),
-      () => console.debug(`Ran out of retry attempts.`)
-    ),
+    tap(val => console.log(val), () => console.debug(`Ran out of retry attempts.`)),
     catchError(error => {
       console.error(error);
       return of(undefined);

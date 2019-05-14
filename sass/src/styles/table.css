@@ -1,0 +1,20 @@
+.minion-table-wrapper table {
+  margin: auto; }
+  .minion-table-wrapper table tr:nth-child(even) {
+    background: #cb99c9; }
+  .minion-table-wrapper table tr:nth-child(odd) {
+    background: #b19cd9; }
+  .minion-table-wrapper table tr th {
+    background: #ccc; }
+  .minion-table-wrapper table tr td {
+    text-align: left; }
+    .minion-table-wrapper table tr td:first-child {
+      background: #ccc;
+      text-align: center; }
+  .minion-table-wrapper table tr th, .minion-table-wrapper table tr td {
+    min-width: 32px;
+    padding: 0 4px; }
+    .minion-table-wrapper table tr th:first-child, .minion-table-wrapper table tr td:first-child {
+      text-align: center; }
+
+/*# sourceMappingURL=table.css.map */
